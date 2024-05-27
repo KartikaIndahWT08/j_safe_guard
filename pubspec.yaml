@@ -1,0 +1,50 @@
+name: tes_j_safe_guard
+description: "A new Flutter project."
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  google_fonts: ^4.0.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - lib/image/logo.png
+    - lib/image/apple.png
+    - lib/image/facebook.png
+    - lib/image/google.png
+    - lib/image/splash1.png
+    - lib/image/splash2.png
+    - lib/image/splash3.png
+    - lib/image/police.png
+    - lib/image/ambulan.png
+    - lib/image/fire.png
+    - lib/image/profile.jpg
+    - lib/image/wellcome.jpg
+    - lib/image/edu1.png
+    - lib/image/news1.png
+    - lib/image/map.png
+    - lib/image/iconmap.png
+
+
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: fonts/Poppins-Regular.ttf
+        - asset: fonts/Poppins-Bold.ttf
+
+
