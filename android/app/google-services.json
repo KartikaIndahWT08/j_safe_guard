@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "528361676273",
+    "project_id": "jsafeguard-8eb27",
+    "storage_bucket": "jsafeguard-8eb27.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528361676273:android:bf27e77a793bba68e67850",
+        "android_client_info": {
+          "package_name": "com.example.tes_j_safe_guard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBw_4sOdRmmECfXgU2iK13Y9_zXpOTx9pc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tes_j_safe_guard/provider/auth_provider.dart';
 import '../../signup/screen/signup.dart';
 import '../../started/screen/started.dart';
 
@@ -7,6 +9,9 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -24,6 +29,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 TextField(
+                  controller: emailController,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.person),
                     hintText: 'Username or Email',
@@ -34,6 +40,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 TextField(
+                  controller: passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock),
@@ -59,30 +66,36 @@ class LoginPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    final email = emailController.text;
+                    final password = passwordController.text;
+
+                    try {
+                      await Provider.of<AuthProvider>(context, listen: false)
+                          .signIn(email, password);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Started(),
+                        ),
+                      );
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(e.toString()),
+                        ),
+                      );
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     backgroundColor: const Color(0xFF004AAD),
                     foregroundColor: Colors.white,
                   ),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Started()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      backgroundColor: const Color(0xFF004AAD),
-                      foregroundColor: Colors.white,
-                    ),
-                    child: Container(
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      child: const Text('Login'),
-                    ),
+                  child: Container(
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    child: const Text('Login'),
                   ),
                 ),
                 const SizedBox(height: 30),
@@ -136,7 +149,8 @@ class LoginPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const SignupPage()),
+                            builder: (context) => const SignupPage(),
+                          ),
                         );
                       },
                       style: TextButton.styleFrom(
