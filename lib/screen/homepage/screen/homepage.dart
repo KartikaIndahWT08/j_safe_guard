@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:tes_j_safe_guard/navbar.dart';
+import 'package:tes_j_safe_guard/provider/home_provider.dart';
 import 'package:tes_j_safe_guard/provider/user_provider.dart';
 import 'package:tes_j_safe_guard/screen/detailNews/screen/detailNews.dart';
 import 'package:tes_j_safe_guard/screen/news/screen/news.dart';
@@ -20,6 +21,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
+    final homeProvider = Provider.of<HomeProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(children: [
@@ -123,19 +125,33 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 20.0),
-                const Row(
+                Row(
                   children: [
-                    Icon(Icons.location_on, color: Colors.white),
-                    SizedBox(width: 8.0),
-                    Text(
-                      'Tanggul, Jember',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                        fontFamily: 'Poppins',
-                      ),
+                    const Icon(Icons.location_on, color: Colors.white),
+                    const SizedBox(width: 8.0),
+                    DropdownButton<String>(
+                      value: homeProvider.selectedSubDistrict,
+                      onChanged: (String? newValue) {
+                        if (newValue != null) {
+                          homeProvider.setSelectedSubDistrict(newValue);
+                        }
+                      },
+                      items: homeProvider.subDistricts
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontFamily: 'Poppins',
+                            ),
+                          ),
+                        );
+                      }).toList(),
                     ),
-                    Icon(
+                    const Icon(
                       Icons.arrow_drop_down,
                       color: Colors.white,
                     ),
@@ -178,7 +194,8 @@ class HomePage extends StatelessWidget {
                     // Tambahkan navigasi ke MainPage di sini
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const HotlinePage()),
+                      MaterialPageRoute(
+                          builder: (context) => const HotlinePage()),
                     );
                   },
                   child: const Text(
