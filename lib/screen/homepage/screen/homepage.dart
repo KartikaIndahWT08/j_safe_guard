@@ -1,8 +1,10 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:tes_j_safe_guard/navbar.dart';
+import 'package:tes_j_safe_guard/provider/user_provider.dart';
 import 'package:tes_j_safe_guard/screen/detailNews/screen/detailNews.dart';
 import 'package:tes_j_safe_guard/screen/news/screen/news.dart';
 
@@ -17,6 +19,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(children: [
@@ -76,16 +79,16 @@ class HomePage extends StatelessWidget {
                 end: Alignment.bottomCenter,
               ),
             ),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    SizedBox(width: 16.0),
+                    const SizedBox(width: 16.0),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Good Afternoon,',
                           style: TextStyle(
                             fontSize: 24,
@@ -94,8 +97,8 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Arta!',
-                          style: TextStyle(
+                          '${userProvider.name}!',
+                          style: const TextStyle(
                             fontSize: 24,
                             color: Colors.black,
                             fontFamily: 'Poppins',
@@ -104,7 +107,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Expanded(
+                    const Expanded(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -119,8 +122,8 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 20.0),
-                Row(
+                const SizedBox(height: 20.0),
+                const Row(
                   children: [
                     Icon(Icons.location_on, color: Colors.white),
                     SizedBox(width: 8.0),
@@ -175,7 +178,7 @@ class HomePage extends StatelessWidget {
                     // Tambahkan navigasi ke MainPage di sini
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HotlinePage()),
+                      MaterialPageRoute(builder: (context) => const HotlinePage()),
                     );
                   },
                   child: const Text(

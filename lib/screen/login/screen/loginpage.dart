@@ -72,7 +72,7 @@ class LoginPage extends StatelessWidget {
 
                     try {
                       await Provider.of<AuthProvider>(context, listen: false)
-                          .signIn(email, password);
+                          .signIn(context, email, password);
                       Navigator.push(
                         context,
                         MaterialPageRoute(

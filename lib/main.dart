@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tes_j_safe_guard/provider/user_provider.dart';
 import 'package:tes_j_safe_guard/screen/lc.dart';
 import 'package:tes_j_safe_guard/screen/splash/screen/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
       ],
       child: const MaterialApp(
         title: 'Jember - Safe Guard',

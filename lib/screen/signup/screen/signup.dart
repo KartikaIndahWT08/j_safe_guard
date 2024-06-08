@@ -145,7 +145,7 @@ class SignupPage extends StatelessWidget {
 
                     try {
                       await Provider.of<AuthProvider>(context, listen: false)
-                          .signUp(email, password, name, phone);
+                          .signUp(context, email, password, name, phone);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
