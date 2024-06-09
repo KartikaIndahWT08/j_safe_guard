@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tes_j_safe_guard/provider/education_provider.dart';
 import 'package:tes_j_safe_guard/provider/home_provider.dart';
 import 'package:tes_j_safe_guard/provider/hotline_provider.dart';
 import 'package:tes_j_safe_guard/provider/user_provider.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
         ChangeNotifierProvider(create: (_) => HotlineProvider()),
+        ChangeNotifierProvider(create: (_) => EducationProvider()),
       ],
       child: const MaterialApp(
         title: 'Jember - Safe Guard',
