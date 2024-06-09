@@ -42,7 +42,6 @@ class EducationProvider with ChangeNotifier {
 
   Future<void> fetchDetail(int index) async {
     try {
-      // if (_articles.isNotEmpty && index < _articles.length) {
       QuerySnapshot educationSnapshot =
           await _firestore.collection('education').get();
       if (educationSnapshot.docs.isNotEmpty) {

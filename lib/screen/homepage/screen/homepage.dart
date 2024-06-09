@@ -460,77 +460,77 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const detailNews()),
-              );
-            },
-            child: Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(16),
-                      bottom: Radius.circular(16),
-                    ),
-                    child: Image.asset(
-                      'lib/image/news1.png',
-                      width: double.infinity,
-                      height: 300,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                const Positioned(
-                  left: 16,
-                  right: 16,
-                  bottom: 0,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding:
-                            EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                        child: Text(
-                          'by Ryan Brownie',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Text(
-                          'Mafia begal Ditangkap pagi ini pada pukul 09.00 , Kapolsek Jember siapkan pernyataan untuk pers !',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                        child: Text(
-                          'Mafia begal ditangkap pada pukul 09.00 pagi ini di Jember. Kapolsek Jember telah menyiapkan pernyataan untuk pers.',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white70,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(builder: (context) => const detailNews()),
+          //     );
+          //   },
+          //   child: Stack(
+          //     children: [
+          //       Padding(
+          //         padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          //         child: ClipRRect(
+          //           borderRadius: const BorderRadius.vertical(
+          //             top: Radius.circular(16),
+          //             bottom: Radius.circular(16),
+          //           ),
+          //           child: Image.asset(
+          //             'lib/image/news1.png',
+          //             width: double.infinity,
+          //             height: 300,
+          //             fit: BoxFit.cover,
+          //           ),
+          //         ),
+          //       ),
+          //       const Positioned(
+          //         left: 16,
+          //         right: 16,
+          //         bottom: 0,
+          //         child: Column(
+          //           crossAxisAlignment: CrossAxisAlignment.start,
+          //           children: [
+          //             Padding(
+          //               padding:
+          //                   EdgeInsets.only(left: 16, right: 16, bottom: 16),
+          //               child: Text(
+          //                 'by Ryan Brownie',
+          //                 style: TextStyle(
+          //                   fontSize: 18,
+          //                   fontWeight: FontWeight.bold,
+          //                   color: Colors.white,
+          //                 ),
+          //               ),
+          //             ),
+          //             Padding(
+          //               padding: EdgeInsets.all(16.0),
+          //               child: Text(
+          //                 'Mafia begal Ditangkap pagi ini pada pukul 09.00 , Kapolsek Jember siapkan pernyataan untuk pers !',
+          //                 style: TextStyle(
+          //                   fontSize: 20,
+          //                   fontWeight: FontWeight.bold,
+          //                   color: Colors.white,
+          //                 ),
+          //               ),
+          //             ),
+          //             Padding(
+          //               padding:
+          //                   EdgeInsets.only(left: 16, right: 16, bottom: 16),
+          //               child: Text(
+          //                 'Mafia begal ditangkap pada pukul 09.00 pagi ini di Jember. Kapolsek Jember telah menyiapkan pernyataan untuk pers.',
+          //                 style: TextStyle(
+          //                   fontSize: 18,
+          //                   color: Colors.white70,
+          //                 ),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ]),
       ),
       bottomNavigationBar: const BottomNavBar(

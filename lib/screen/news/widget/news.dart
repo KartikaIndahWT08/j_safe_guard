@@ -6,13 +6,11 @@ class news extends StatelessWidget {
   String gambar;
   String title;
   String nama;
-  String deskripsi;
   news(
       {super.key,
       required this.gambar,
       required this.title,
-      required this.nama,
-      required this.deskripsi});
+      required this.nama,});
 
   @override
   Widget build(BuildContext context) {
@@ -63,22 +61,6 @@ class news extends StatelessWidget {
               title,
               style: GoogleFonts.poppins(
                   fontSize: 16,
-                  fontWeight: FontWeight.w300,
-                  color: Colors.white),
-            ),
-          ),
-        ),
-        Positioned(
-          top: 186,
-          left: 16,
-          right: 8,
-          child: SizedBox(
-            height: 128,
-            width: 345,
-            child: Text(
-              deskripsi,
-              style: GoogleFonts.poppins(
-                  fontSize: 10,
                   fontWeight: FontWeight.w300,
                   color: Colors.white),
             ),
