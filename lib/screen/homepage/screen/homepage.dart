@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:tes_j_safe_guard/navbar.dart';
+import 'package:tes_j_safe_guard/provider/education_provider.dart';
 import 'package:tes_j_safe_guard/provider/home_provider.dart';
 import 'package:tes_j_safe_guard/provider/user_provider.dart';
 import 'package:tes_j_safe_guard/screen/detailNews/screen/detailNews.dart';
 import 'package:tes_j_safe_guard/screen/news/screen/news.dart';
 
-import '../../detailEducation/screen/detailEdu.dart';
 import '../../education/screen/education.dart';
 import '../../hotline/screen/HotlineCall.dart';
 import '../../zoneC/screen/ZoneCondition.dart';
@@ -362,64 +362,56 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Detail()),
-              );
-            },
-            child: Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.vertical(
-                        top: Radius.circular(16), bottom: Radius.circular(16)),
-                    child: Image.asset(
-                      'lib/image/edu1.png',
-                      width: double.infinity,
-                      height: 150,
-                      fit: BoxFit.cover,
+          Positioned(
+            left: 16,
+            right: 16,
+            bottom: 0,
+            child: Consumer<EducationProvider>(
+              builder: (context, educationProvider, _) {
+                // Find the article with the specific title and author
+                final article = educationProvider.articles.firstWhere(
+                  (article) =>
+                      article['title'] ==
+                          "Langkah-Langkah Darurat Saat Kebakaran di Rumah" &&
+                      article['author'] == "Rahma Wati",
+                  orElse: () => {},
+                );
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        article.isNotEmpty
+                            ? article['title']!
+                            : 'Title Not Found',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                const Positioned(
-                  left: 16,
-                  right: 16,
-                  bottom: 0,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Text(
-                          'Hal-hal yang harus kamu lakukan terhadap seseorang yang kejang!',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                      child: Text(
+                        article.isNotEmpty
+                            ? article['author']!
+                            : 'Author Not Found',
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white70,
                         ),
                       ),
-                      Padding(
-                        padding:
-                            EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                        child: Text(
-                          'Matt Villano',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white70,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                    ),
+                  ],
+                );
+              },
             ),
           ),
+
 
           Container(
             margin: const EdgeInsets.all(16.0),

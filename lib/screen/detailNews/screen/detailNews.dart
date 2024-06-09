@@ -1,7 +1,9 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tes_j_safe_guard/screen/news/screen/news.dart';
 
+// ignore: camel_case_types
 class detailNews extends StatelessWidget {
   const detailNews({super.key});
 

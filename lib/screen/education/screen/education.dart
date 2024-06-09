@@ -27,10 +27,11 @@ class Education extends StatelessWidget {
             toolbarHeight: 80,
             flexibleSpace: Container(
               decoration: const BoxDecoration(
-                  gradient: LinearGradient(colors: [
-                Color.fromRGBO(153, 153, 153, 1),
-                Colors.white
-              ])),
+                gradient: LinearGradient(colors: [
+                  Color.fromRGBO(153, 153, 153, 1),
+                  Colors.white,
+                ]),
+              ),
             ),
             leading: Image.asset(
               'lib/image/logo.png',
@@ -38,19 +39,23 @@ class Education extends StatelessWidget {
             ),
             title: RichText(
               text: TextSpan(
-                  text: "Jember-",
-                  style: GoogleFonts.poppins(
+                text: "Jember-",
+                style: GoogleFonts.poppins(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black,
+                ),
+                children: [
+                  TextSpan(
+                    text: "Safe Guard",
+                    style: GoogleFonts.poppins(
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
-                      color: Colors.black),
-                  children: [
-                    TextSpan(
-                        text: "Safe Guard",
-                        style: GoogleFonts.poppins(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                            color: const Color.fromRGBO(0, 74, 173, 1)))
-                  ]),
+                      color: const Color.fromRGBO(0, 74, 173, 1),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           body: Consumer<EducationProvider>(
@@ -84,23 +89,29 @@ class Education extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 16),
-                      ...educationProvider.articles.map((article) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) {
-                                return const Detail(); 
+                      ...List.generate(educationProvider.articles.length,
+                          (index) {
+                        final article = educationProvider.articles[index];
+                        return Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return Detail(index: index);
+                                  },
+                                ));
                               },
-                            ));
-                          },
-                          child: berita(
-                            gambar: "lib/image/edu1.png",
-                            title: article['title']!,
-                            nama: article['author']!,
-                          ),
+                              child: berita(
+                                gambar: "lib/image/edu1.png",
+                                title: article['title'] ?? 'No Title',
+                                nama: article['author'] ?? 'No Author',
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                          ],
                         );
-                      }).toList(),
-                      const SizedBox(height: 16),
+                      }),
                     ],
                   ),
                 ],
