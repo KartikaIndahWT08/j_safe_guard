@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tes_j_safe_guard/provider/home_provider.dart';
+import 'package:tes_j_safe_guard/provider/hotline_provider.dart';
 import 'package:tes_j_safe_guard/provider/user_provider.dart';
 import 'package:tes_j_safe_guard/screen/lc.dart';
 import 'package:tes_j_safe_guard/screen/splash/screen/splash.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
+        ChangeNotifierProvider(create: (_) => HotlineProvider()),
       ],
       child: const MaterialApp(
         title: 'Jember - Safe Guard',

@@ -1,6 +1,7 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tes_j_safe_guard/provider/home_provider.dart';
+import 'package:tes_j_safe_guard/provider/hotline_provider.dart';
 
 import '../../../navbar.dart';
 
@@ -8,12 +9,25 @@ class HotlinePage extends StatefulWidget {
   const HotlinePage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _HotlinePageState createState() => _HotlinePageState();
 }
 
 class _HotlinePageState extends State<HotlinePage> {
   @override
+  void initState() {
+    super.initState();
+    // Fetch the initial data when the widget is created
+    final homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    final hotlineProvider =
+        Provider.of<HotlineProvider>(context, listen: false);
+    hotlineProvider.fetchHotlineData(homeProvider.selectedSubDistrict);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final hotlineProvider = Provider.of<HotlineProvider>(context);
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(150.0),
@@ -57,25 +71,39 @@ class _HotlinePageState extends State<HotlinePage> {
                     const Spacer(),
                   ],
                 ),
-                const SizedBox(height: 20.0),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(Icons.location_on, color: Colors.black),
-                    SizedBox(width: 8.0),
-                    Text(
-                      'Tanggul, Jember',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                        fontFamily: 'Poppins',
-                      ),
-                    ),
-                    Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.black,
-                    ),
-                  ],
+                // const SizedBox(height: 20.0),
+                Consumer<HomeProvider>(
+                  builder: (context, homeProvider, child) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Icon(Icons.location_on, color: Colors.black),
+                        const SizedBox(width: 8.0),
+                        DropdownButton<String>(
+                          value: homeProvider.selectedSubDistrict,
+                          icon: const Icon(Icons.arrow_drop_down),
+                          iconSize: 24,
+                          elevation: 16,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontFamily: 'Poppins',
+                          ),
+                          onChanged: (String? newValue) {
+                            homeProvider.setSelectedSubDistrict(newValue!);
+                            hotlineProvider.fetchHotlineData(newValue);
+                          },
+                          items: homeProvider.subDistricts
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ],
             ),
@@ -85,33 +113,25 @@ class _HotlinePageState extends State<HotlinePage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
-          children: <Widget>[
-            buildCard('Police', 'lib/image/police.png', [
-              buildContactItem(
-                  'Tanggul Police Sector, Tanggul Wetan', '(0336) 441110'),
-              buildContactItem(
-                  'Tanggul Police Sector, Tanggul Wetan', '(0336) 441110'),
-              buildContactItem(
-                  'Tanggul Police Sector, Tanggul Wetan', '(0336) 441110'),
-              buildContactItem(
-                  'Tanggul Police Sector, Tanggul Wetan', '(0336) 441110'),
-            ]),
-            buildCard('Ambulance', 'lib/image/ambulan.png', [
-              buildContactItem(
-                  'Ambulance RS Bina Sehat Tanggul', '(0331) 422701'),
-              buildContactItem(
-                  'Ambulance RS Bina Sehat Tanggul', '(0331) 422701'),
-              buildContactItem(
-                  'Ambulance RS Bina Sehat Tanggul', '(0331) 422701'),
-              buildContactItem(
-                  'Ambulance RS Bina Sehat Tanggul', '(0331) 422701'),
-            ]),
-            buildCard('Firefighter', 'lib/image/fire.png', [
-              buildContactItem('Damkar Jember', '0331 321 213'),
-              buildContactItem('Damkar Jember', '0331 321 213'),
-              buildContactItem('Damkar Jember', '0331 321 213'),
-              buildContactItem('Damkar Jember', '0331 321 213'),
-            ]),
+          children: [
+            buildCard(
+                'Police',
+                'lib/image/police.png',
+                hotlineProvider.hotlineData
+                    .where((data) => data['title'] == 'Polisi')
+                    .toList()),
+            buildCard(
+                'Ambulance',
+                'lib/image/ambulan.png',
+                hotlineProvider.hotlineData
+                    .where((data) => data['title'] == 'Ambulan')
+                    .toList()),
+            buildCard(
+                'Firefighter',
+                'lib/image/fire.png',
+                hotlineProvider.hotlineData
+                    .where((data) => data['title'] == 'Pemadam Kebakaran')
+                    .toList()),
           ],
         ),
       ),
@@ -119,7 +139,8 @@ class _HotlinePageState extends State<HotlinePage> {
     );
   }
 
-  Widget buildCard(String title, String imagePath, List<Widget> contacts) {
+  Widget buildCard(
+      String title, String imagePath, List<Map<String, dynamic>> contacts) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
@@ -155,7 +176,9 @@ class _HotlinePageState extends State<HotlinePage> {
             ),
           ),
           Column(
-            children: contacts,
+            children: contacts.map((contact) {
+              return buildContactItem(contact['title'], contact['contact']);
+            }).toList(),
           ),
         ],
       ),
