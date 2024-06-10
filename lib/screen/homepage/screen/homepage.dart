@@ -338,8 +338,7 @@ class HomePage extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const Education()),
+                      MaterialPageRoute(builder: (context) => const News()),
                     );
                   },
                   child: const Text(
@@ -353,57 +352,13 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-            left: 16,
-            right: 16,
-            bottom: 0,
-            child: Consumer<EducationProvider>(
-              builder: (context, educationProvider, _) {
-                // Find the article with the specific title and author
-                final article = educationProvider.articles.firstWhere(
-                  (article) =>
-                      article['title'] ==
-                          "Langkah-Langkah Darurat Saat Kebakaran di Rumah" &&
-                      article['author'] == "Rahma Wati",
-                  orElse: () => {},
-                );
-
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        article.isNotEmpty
-                            ? article['title']!
-                            : 'Title Not Found',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 16, right: 16, bottom: 16),
-                      child: Text(
-                        article.isNotEmpty
-                            ? article['author']!
-                            : 'Author Not Found',
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white70,
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              },
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Image.asset(
+              'lib/image/educover.png',
+              fit: BoxFit.cover,
             ),
           ),
-
           Container(
             margin: const EdgeInsets.all(16.0),
             padding:
@@ -449,6 +404,13 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Image.asset(
+              'lib/image/newscover.png',
+              fit: BoxFit.cover,
             ),
           ),
           // GestureDetector(

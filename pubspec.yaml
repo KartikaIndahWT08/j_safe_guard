@@ -43,6 +43,8 @@ flutter:
     - lib/image/news1.png
     - lib/image/map.png
     - lib/image/iconmap.png
+    - lib/image/newscover.png
+    - lib/image/educover.png
 
 
 
