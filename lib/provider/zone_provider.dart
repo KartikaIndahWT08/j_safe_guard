@@ -35,7 +35,7 @@ class ZoneProvider with ChangeNotifier {
           Map<String, dynamic> data = zoneDoc.data() as Map<String, dynamic>;
           _zoneData.add({
             'area': data['area'] ?? '',
-            'condition': data['condition'] ?? '',
+            'condition': data['kondisi'] ?? '',
           });
         }
 
