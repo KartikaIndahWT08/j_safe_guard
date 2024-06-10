@@ -15,7 +15,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  String _location = 'Tanggul, Jember';
 
   @override
   Widget build(BuildContext context) {
@@ -51,26 +50,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 controller: _emailController,
                 decoration: const InputDecoration(
                   labelText: 'Email',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(height: 16),
-              DropdownButtonFormField<String>(
-                value: _location,
-                items: ['Tanggul, Jember', 'Other Location']
-                    .map((String location) {
-                  return DropdownMenuItem<String>(
-                    value: location,
-                    child: Text(location),
-                  );
-                }).toList(),
-                onChanged: (newValue) {
-                  setState(() {
-                    _location = newValue!;
-                  });
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Location',
                   border: OutlineInputBorder(),
                 ),
               ),

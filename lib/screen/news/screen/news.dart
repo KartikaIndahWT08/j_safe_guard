@@ -22,38 +22,51 @@ class News extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          appBar: AppBar(
-            toolbarHeight: 80,
-            flexibleSpace: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(colors: [
-                  Color.fromRGBO(153, 153, 153, 1),
-                  Colors.white,
-                ]),
-              ),
-            ),
-            leading: Image.asset(
-              'lib/image/logo.png',
-              height: 60,
-            ),
-            title: RichText(
-              text: TextSpan(
-                text: "Jember-",
-                style: GoogleFonts.poppins(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black,
-                ),
-                children: [
-                  TextSpan(
-                    text: "Safe Guard",
-                    style: GoogleFonts.poppins(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                      color: const Color.fromRGBO(0, 74, 173, 1),
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(150.0),
+            child: AppBar(
+              backgroundColor: Colors.grey[200],
+              elevation: 1.0,
+              flexibleSpace: Padding(
+                padding:
+                    const EdgeInsets.only(top: 40.0, left: 16.0, right: 16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        Image.asset(
+                          'lib/image/logo.png',
+                          height: 60,
+                        ),
+                        const SizedBox(width: 16),
+                        RichText(
+                          text: const TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'Jember-',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              TextSpan(
+                                text: 'Safe Guard',
+                                style: TextStyle(
+                                  color: Color(0xFF004AAD),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Spacer(),
+                      ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -63,9 +76,7 @@ class News extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      const SizedBox(
-                        height: 6,
-                      ),
+                      const SizedBox(height: 6),
                       Container(
                         height: 60,
                         width: 343,
@@ -89,9 +100,7 @@ class News extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 16,
-                      ),
+                      const SizedBox(height: 16),
                       ...List.generate(newsProvider.news.length, (index) {
                         final newsItem = newsProvider.news[index];
                         return InkWell(

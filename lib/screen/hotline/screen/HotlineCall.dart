@@ -34,6 +34,8 @@ class _HotlinePageState extends State<HotlinePage> {
         child: AppBar(
           backgroundColor: Colors.grey[200],
           elevation: 1.0,
+          automaticallyImplyLeading:
+              false, // Tambahkan baris ini untuk menghilangkan panah kembali
           flexibleSpace: Padding(
             padding: const EdgeInsets.only(top: 40.0, left: 16.0, right: 16.0),
             child: Column(

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -12,8 +14,7 @@ class NewsProvider with ChangeNotifier {
   Future<void> fetchNews() async {
     try {
       _news.clear();
-      QuerySnapshot newsSnapshot =
-          await _firestore.collection('news').get();
+      QuerySnapshot newsSnapshot = await _firestore.collection('news').get();
       if (newsSnapshot.docs.isNotEmpty) {
         String newsDocId = newsSnapshot.docs.first.id;
         for (int i = 1; i <= 20; i++) {

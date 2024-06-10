@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_final_fields, avoid_function_literals_in_foreach_calls, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 

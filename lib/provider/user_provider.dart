@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -13,7 +15,10 @@ class UserProvider with ChangeNotifier {
 
   Future<void> fetchUser(String userId) async {
     try {
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
       if (userDoc.exists) {
         _name = userDoc['name'];
         _email = userDoc['email'];

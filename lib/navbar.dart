@@ -17,7 +17,7 @@ class BottomNavBar extends StatelessWidget {
       case 0:
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HotlinePage()),
+          MaterialPageRoute(builder: (context) => const HotlinePage()),
         );
         break;
       case 1:

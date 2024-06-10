@@ -24,6 +24,7 @@ class _ZonePageState extends State<ZonePage> {
         child: AppBar(
           backgroundColor: Colors.grey[200],
           elevation: 1.0,
+          automaticallyImplyLeading: false, // Hilangkan panah kembali
           flexibleSpace: Padding(
             padding: const EdgeInsets.only(top: 40.0, left: 16.0, right: 16.0),
             child: Column(

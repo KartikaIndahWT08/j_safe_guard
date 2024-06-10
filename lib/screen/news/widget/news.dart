@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -6,11 +8,12 @@ class news extends StatelessWidget {
   String gambar;
   String title;
   String nama;
-  news(
-      {super.key,
-      required this.gambar,
-      required this.title,
-      required this.nama,});
+  news({
+    super.key,
+    required this.gambar,
+    required this.title,
+    required this.nama,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tes_j_safe_guard/provider/auth_provider.dart';
@@ -44,10 +46,6 @@ class LoginPage extends StatelessWidget {
                   obscureText: true,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock),
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.visibility),
-                      onPressed: () {},
-                    ),
                     hintText: 'Password',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
@@ -97,47 +95,6 @@ class LoginPage extends StatelessWidget {
                     alignment: Alignment.center,
                     child: const Text('Login'),
                   ),
-                ),
-                const SizedBox(height: 30),
-                const Row(
-                  children: [
-                    Expanded(child: Divider(thickness: 1)),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text('- OR Continue with -'),
-                    ),
-                    Expanded(child: Divider(thickness: 1)),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      icon: Image.asset(
-                        'lib/image/google.png',
-                        width: 32,
-                        height: 32,
-                      ),
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: Image.asset(
-                        'lib/image/apple.png',
-                        width: 32,
-                        height: 32,
-                      ),
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: Image.asset(
-                        'lib/image/facebook.png',
-                        width: 32,
-                        height: 32,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ],
                 ),
                 const SizedBox(height: 16),
                 Row(

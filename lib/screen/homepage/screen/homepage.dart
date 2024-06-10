@@ -7,7 +7,6 @@ import 'package:tes_j_safe_guard/navbar.dart';
 import 'package:tes_j_safe_guard/provider/education_provider.dart';
 import 'package:tes_j_safe_guard/provider/home_provider.dart';
 import 'package:tes_j_safe_guard/provider/user_provider.dart';
-import 'package:tes_j_safe_guard/screen/detailNews/screen/detailNews.dart';
 import 'package:tes_j_safe_guard/screen/news/screen/news.dart';
 
 import '../../education/screen/education.dart';
@@ -394,7 +393,8 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                      padding: const EdgeInsets.only(
+                          left: 16, right: 16, bottom: 16),
                       child: Text(
                         article.isNotEmpty
                             ? article['author']!
@@ -411,7 +411,6 @@ class HomePage extends StatelessWidget {
               },
             ),
           ),
-
 
           Container(
             margin: const EdgeInsets.all(16.0),
