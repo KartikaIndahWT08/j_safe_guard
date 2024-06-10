@@ -150,10 +150,6 @@ class HomePage extends StatelessWidget {
                         );
                       }).toList(),
                     ),
-                    const Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.white,
-                    ),
                   ],
                 ),
               ],

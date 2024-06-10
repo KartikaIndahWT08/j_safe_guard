@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -11,7 +9,7 @@ class ZoneProvider with ChangeNotifier {
 
   Future<void> fetchZoneData(String selectedSubDistrict) async {
     try {
-      _zoneData.clear();
+      _zoneData.clear(); // Move this line inside the try block
 
       // Get the single document ID within the 'kecamatan' collection
       QuerySnapshot kecamatanSnapshot =
@@ -36,7 +34,7 @@ class ZoneProvider with ChangeNotifier {
             'condition': data['condition'] ?? '',
           });
         }
-        notifyListeners();
+        notifyListeners(); // Notify listeners after data is updated
       }
     } catch (e) {
       print(e);
