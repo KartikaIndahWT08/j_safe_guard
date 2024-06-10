@@ -47,6 +47,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               const SizedBox(height: 16),
               TextField(
+                controller: _usernameController,
+                decoration: const InputDecoration(
+                  labelText: 'Phone Number',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 16),
+              TextField(
                 controller: _emailController,
                 decoration: const InputDecoration(
                   labelText: 'Email',

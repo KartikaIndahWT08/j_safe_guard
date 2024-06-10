@@ -36,7 +36,7 @@ class SignupPage extends StatelessWidget {
                   controller: nameController,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.person),
-                    hintText: 'Full Name',
+                    hintText: 'Username',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
