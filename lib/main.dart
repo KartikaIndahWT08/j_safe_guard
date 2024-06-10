@@ -4,6 +4,7 @@ import 'package:tes_j_safe_guard/provider/education_provider.dart';
 import 'package:tes_j_safe_guard/provider/home_provider.dart';
 import 'package:tes_j_safe_guard/provider/hotline_provider.dart';
 import 'package:tes_j_safe_guard/provider/user_provider.dart';
+import 'package:tes_j_safe_guard/provider/zone_provider.dart';
 import 'package:tes_j_safe_guard/screen/lc.dart';
 import 'package:tes_j_safe_guard/screen/splash/screen/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
         ChangeNotifierProvider(create: (_) => HotlineProvider()),
+        ChangeNotifierProvider(create: (_) => ZoneProvider()),
         ChangeNotifierProvider(create: (_) => EducationProvider()),
       ],
       child: const MaterialApp(

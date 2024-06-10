@@ -1,7 +1,7 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import 'package:tes_j_safe_guard/provider/zone_provider.dart';
+import 'package:tes_j_safe_guard/provider/home_provider.dart';
 import '../../../navbar.dart';
 
 class ZonePage extends StatefulWidget {
@@ -15,8 +15,25 @@ class _ZonePageState extends State<ZonePage> {
   bool isInformationButtonPressed = false;
 
   @override
+  void initState() {
+    super.initState();
+    final zoneProvider = Provider.of<ZoneProvider>(context, listen: false);
+    final homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    zoneProvider.fetchZoneData(homeProvider.selectedSubDistrict);
+  }
+
+  void _onSubDistrictChanged(String? newValue) {
+    if (newValue == null) return;
+    final homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    final zoneProvider = Provider.of<ZoneProvider>(context, listen: false);
+    homeProvider.setSelectedSubDistrict(newValue);
+    zoneProvider.fetchZoneData(newValue);
+  }
+
+  @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+    final zoneProvider = Provider.of<ZoneProvider>(context);
 
     return Scaffold(
       appBar: PreferredSize(
@@ -24,7 +41,7 @@ class _ZonePageState extends State<ZonePage> {
         child: AppBar(
           backgroundColor: Colors.grey[200],
           elevation: 1.0,
-          automaticallyImplyLeading: false, // Hilangkan panah kembali
+          automaticallyImplyLeading: false,
           flexibleSpace: Padding(
             padding: const EdgeInsets.only(top: 40.0, left: 16.0, right: 16.0),
             child: Column(
@@ -62,25 +79,35 @@ class _ZonePageState extends State<ZonePage> {
                     const Spacer(),
                   ],
                 ),
-                const SizedBox(height: 20.0),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(Icons.location_on, color: Colors.black),
-                    SizedBox(width: 8.0),
-                    Text(
-                      'Tanggul, Jember',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                        fontFamily: 'Poppins',
-                      ),
-                    ),
-                    Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.black,
-                    ),
-                  ],
+                Consumer<HomeProvider>(
+                  builder: (context, homeProvider, child) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Icon(Icons.location_on, color: Colors.black),
+                        const SizedBox(width: 8.0),
+                        DropdownButton<String>(
+                          value: homeProvider.selectedSubDistrict,
+                          icon: const Icon(Icons.arrow_drop_down),
+                          iconSize: 24,
+                          elevation: 16,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontFamily: 'Poppins',
+                          ),
+                          onChanged: _onSubDistrictChanged,
+                          items: homeProvider.subDistricts
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ],
             ),
@@ -94,7 +121,7 @@ class _ZonePageState extends State<ZonePage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                height: height * 0.3, // 30% of the screen height
+                height: height * 0.3,
                 color: Colors.grey[300],
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,43 +186,13 @@ class _ZonePageState extends State<ZonePage> {
                     Container(
                       padding: const EdgeInsets.all(8),
                       color: Colors.grey[200],
-                      child: const Column(
-                        children: [
-                          InformationRow(
-                            leftText: 'Desa Klatakan, Tanggul Jember',
-                            rightText: 'Rawan Begal',
-                          ),
-                          SizedBox(height: 10),
-                          InformationRow(
-                            leftText: 'Jalan Raya Pondok Dalem, Tanggul',
-                            rightText: 'Rawan Kecelakaan',
-                          ),
-                          SizedBox(height: 10),
-                          InformationRow(
-                            leftText: 'Desa Patemon',
-                            rightText: 'Rawan Pencurian',
-                          ),
-                          SizedBox(height: 10),
-                          InformationRow(
-                            leftText: 'Desa Patemon',
-                            rightText: 'Rawan Pencurian',
-                          ),
-                          SizedBox(height: 10),
-                          InformationRow(
-                            leftText: 'Desa Patemon',
-                            rightText: 'Rawan Pencurian',
-                          ),
-                          SizedBox(height: 10),
-                          InformationRow(
-                            leftText: 'Desa Patemon',
-                            rightText: 'Rawan Pencurian',
-                          ),
-                          SizedBox(height: 10),
-                          InformationRow(
-                            leftText: 'Desa Patemon',
-                            rightText: 'Rawan Pencurian',
-                          ),
-                        ],
+                      child: Column(
+                        children: zoneProvider.zoneData.map((zone) {
+                          return InformationRow(
+                            leftText: zone['name']!,
+                            rightText: zone['condition']!,
+                          );
+                        }).toList(),
                       ),
                     ),
                   ],
