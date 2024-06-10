@@ -17,9 +17,11 @@ class _ZonePageState extends State<ZonePage> {
   @override
   void initState() {
     super.initState();
-    final zoneProvider = Provider.of<ZoneProvider>(context, listen: false);
-    final homeProvider = Provider.of<HomeProvider>(context, listen: false);
-    zoneProvider.fetchZoneData(homeProvider.selectedSubDistrict);
+    Future.microtask(() {
+      final zoneProvider = Provider.of<ZoneProvider>(context, listen: false);
+      final homeProvider = Provider.of<HomeProvider>(context, listen: false);
+      zoneProvider.fetchZoneData(homeProvider.selectedSubDistrict);
+    });
   }
 
   void _onSubDistrictChanged(String? newValue) {
@@ -189,7 +191,7 @@ class _ZonePageState extends State<ZonePage> {
                       child: Column(
                         children: zoneProvider.zoneData.map((zone) {
                           return InformationRow(
-                            leftText: zone['name']!,
+                            leftText: zone['area']!,
                             rightText: zone['condition']!,
                           );
                         }).toList(),

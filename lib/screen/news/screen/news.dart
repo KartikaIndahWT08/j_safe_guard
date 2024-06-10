@@ -68,6 +68,8 @@ class News extends StatelessWidget {
                   ],
                 ),
               ),
+              automaticallyImplyLeading:
+                  false, // Remove back arrow if necessary
             ),
           ),
           body: Consumer<NewsProvider>(
@@ -76,7 +78,9 @@ class News extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      const SizedBox(height: 6),
+                      const SizedBox(
+                        height: 6,
+                      ),
                       Container(
                         height: 60,
                         width: 343,
@@ -100,7 +104,9 @@ class News extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(
+                        height: 16,
+                      ),
                       ...List.generate(newsProvider.news.length, (index) {
                         final newsItem = newsProvider.news[index];
                         return InkWell(

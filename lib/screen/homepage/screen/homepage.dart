@@ -1,18 +1,14 @@
 // ignore_for_file: use_key_in_widget_constructors
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:tes_j_safe_guard/navbar.dart';
 import 'package:tes_j_safe_guard/provider/education_provider.dart';
 import 'package:tes_j_safe_guard/provider/home_provider.dart';
 import 'package:tes_j_safe_guard/provider/user_provider.dart';
 import 'package:tes_j_safe_guard/screen/news/screen/news.dart';
-
 import '../../education/screen/education.dart';
 import '../../hotline/screen/HotlineCall.dart';
 import '../../zoneC/screen/ZoneCondition.dart';
-// import 'package:tes_j_safe_guard/screen/navbar.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key});
