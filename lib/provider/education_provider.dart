@@ -7,12 +7,17 @@ class EducationProvider with ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final List<Map<String, String>> _articles = [];
   Map<String, String> _articleDetail = {};
+  bool _isLoading = false;
 
   List<Map<String, String>> get articles => _articles;
   Map<String, String> get articleDetail => _articleDetail;
+  bool get isLoading => _isLoading;
 
   Future<void> fetchArticles() async {
     try {
+      _isLoading = true;
+      notifyListeners();
+
       _articles.clear();
       QuerySnapshot educationSnapshot =
           await _firestore.collection('education').get();
@@ -36,14 +41,20 @@ class EducationProvider with ChangeNotifier {
         }
       }
 
+      _isLoading = false;
       notifyListeners();
     } catch (e) {
       print(e);
+      _isLoading = false;
+      notifyListeners();
     }
   }
 
   Future<void> fetchDetail(int index) async {
     try {
+      _isLoading = true;
+      notifyListeners();
+
       QuerySnapshot educationSnapshot =
           await _firestore.collection('education').get();
       if (educationSnapshot.docs.isNotEmpty) {
@@ -64,11 +75,15 @@ class EducationProvider with ChangeNotifier {
             'author': data['Penulis'] ?? '',
             'isi': data['Isi'] ?? '',
           };
-          notifyListeners();
         }
       }
+
+      _isLoading = false;
+      notifyListeners();
     } catch (e) {
       print(e);
+      _isLoading = false;
+      notifyListeners();
     }
   }
 }

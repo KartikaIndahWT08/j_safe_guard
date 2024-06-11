@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tes_j_safe_guard/loading_widget.dart';
 import 'package:tes_j_safe_guard/provider/news_provider.dart';
 import 'package:tes_j_safe_guard/screen/detailNews/screen/detailNews.dart';
 import 'package:tes_j_safe_guard/screen/news/widget/news.dart';
@@ -69,58 +68,48 @@ class News extends StatelessWidget {
                   ],
                 ),
               ),
-              automaticallyImplyLeading:
-                  false, // Remove back arrow if necessary
+              automaticallyImplyLeading: false,
             ),
           ),
           body: Consumer<NewsProvider>(
             builder: (context, newsProvider, child) {
-              return FutureBuilder<void>(
-                future: newsProvider.fetchNews(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const LoadingWidget(); // Show loading animation while fetching data
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text('Error: ${snapshot.error}'),
-                    );
-                  } else {
-                    return ListView(
-                      children: [
-                        Column(
-                          children: [
-                            const SizedBox(
-                              height: 6,
+              return ListView(
+                children: [
+                  Column(
+                    children: [
+                      const SizedBox(height: 6),
+                      Container(
+                        height: 60,
+                        width: 343,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: const Color.fromRGBO(0, 74, 173, 1),
+                        ),
+                        child: ListTile(
+                          title: Text(
+                            "News",
+                            style: GoogleFonts.poppins(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
                             ),
-                            Container(
-                              height: 60,
-                              width: 343,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: const Color.fromRGBO(0, 74, 173, 1),
-                              ),
-                              child: ListTile(
-                                title: Text(
-                                  "News",
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                trailing: const Icon(
-                                  Icons.newspaper_outlined,
-                                  color: Colors.white,
-                                  size: 42,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            ...List.generate(newsProvider.news.length, (index) {
-                              final newsItem = newsProvider.news[index];
-                              return InkWell(
+                          ),
+                          trailing: const Icon(
+                            Icons.newspaper_outlined,
+                            color: Colors.white,
+                            size: 42,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      if (newsProvider.isLoading)
+                        const CircularProgressIndicator() // Show loading animation
+                      else
+                        ...List.generate(newsProvider.news.length, (index) {
+                          final newsItem = newsProvider.news[index];
+                          return Column(
+                            children: [
+                              InkWell(
                                 onTap: () {
                                   Navigator.push(context, MaterialPageRoute(
                                     builder: (context) {
@@ -133,14 +122,15 @@ class News extends StatelessWidget {
                                   title: newsItem['title'] ?? 'No Title',
                                   nama: newsItem['author'] ?? 'No Author',
                                 ),
-                              );
-                            }),
-                          ],
-                        ),
-                      ],
-                    );
-                  }
-                },
+                              ),
+                              const SizedBox(
+                                  height: 16), // Add space between news items
+                            ],
+                          );
+                        }),
+                    ],
+                  ),
+                ],
               );
             },
           ),

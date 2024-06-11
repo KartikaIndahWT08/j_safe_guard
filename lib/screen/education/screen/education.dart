@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tes_j_safe_guard/loading_widget.dart';
 import 'package:tes_j_safe_guard/provider/education_provider.dart';
 import 'package:tes_j_safe_guard/screen/education/widget/berita.dart';
 import 'package:tes_j_safe_guard/screen/detailEducation/screen/detailEdu.dart';
@@ -76,74 +75,64 @@ class Education extends StatelessWidget {
           ),
           body: Consumer<EducationProvider>(
             builder: (context, educationProvider, child) {
-              return FutureBuilder<void>(
-                future: educationProvider.fetchArticles(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const LoadingWidget(); // Show loading animation while fetching data
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text('Error: ${snapshot.error}'),
-                    );
-                  } else {
-                    return ListView(
-                      children: [
-                        Column(
-                          children: [
-                            const SizedBox(height: 6),
-                            Container(
-                              height: 60,
-                              width: 343,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: const Color.fromRGBO(0, 74, 173, 1),
-                              ),
-                              child: ListTile(
-                                title: Text(
-                                  "Emergency Education",
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                trailing: const Icon(
-                                  Icons.book,
-                                  color: Colors.white,
-                                  size: 42,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            ...List.generate(educationProvider.articles.length,
-                                (index) {
-                              final article = educationProvider.articles[index];
-                              return Column(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) {
-                                          return Detail(index: index);
-                                        },
-                                      ));
-                                    },
-                                    child: berita(
-                                      gambar: "lib/image/edu1.png",
-                                      title: article['title'] ?? 'No Title',
-                                      nama: article['author'] ?? 'No Author',
-                                    ),
-                                  ),
-                                  const SizedBox(height: 16),
-                                ],
-                              );
-                            }),
-                          ],
+              return ListView(
+                children: [
+                  Column(
+                    children: [
+                      const SizedBox(height: 6),
+                      Container(
+                        height: 60,
+                        width: 343,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: const Color.fromRGBO(0, 74, 173, 1),
                         ),
-                      ],
-                    );
-                  }
-                },
+                        child: ListTile(
+                          title: Text(
+                            "Emergency Education",
+                            style: GoogleFonts.poppins(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          ),
+                          trailing: const Icon(
+                            Icons.book,
+                            color: Colors.white,
+                            size: 42,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      if (educationProvider.isLoading)
+                        const CircularProgressIndicator() // Show loading animation
+                      else
+                        ...List.generate(educationProvider.articles.length,
+                            (index) {
+                          final article = educationProvider.articles[index];
+                          return Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return Detail(index: index);
+                                    },
+                                  ));
+                                },
+                                child: berita(
+                                  gambar: "lib/image/edu1.png",
+                                  title: article['title'] ?? 'No Title',
+                                  nama: article['author'] ?? 'No Author',
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                            ],
+                          );
+                        }),
+                    ],
+                  ),
+                ],
               );
             },
           ),
