@@ -12,10 +12,10 @@ class AuthProvider with ChangeNotifier {
 
   User? get user => _user;
 
-  Future<void> signUp(BuildContext context, String email, String password,
-      String name, String phoneNumber) async {
-    _user = await _authRepo.createUserWithUsernamePassword(
-        email, password, name, phoneNumber);
+  Future<void> signUp(
+      BuildContext context, String email, String password, String name) async {
+    _user =
+        await _authRepo.createUserWithUsernamePassword(email, password, name);
     await _fetchUserData(context);
     notifyListeners();
   }

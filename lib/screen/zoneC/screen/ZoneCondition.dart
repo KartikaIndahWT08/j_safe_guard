@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tes_j_safe_guard/provider/zone_provider.dart';
-import 'package:tes_j_safe_guard/provider/home_provider.dart';
 import '../../../navbar.dart';
+import 'package:tes_j_safe_guard/provider/zone_provider.dart';
 
 class ZonePage extends StatefulWidget {
-  const ZonePage({super.key});
+  const ZonePage({Key? key}) : super(key: key);
 
   @override
   _ZonePageState createState() => _ZonePageState();
@@ -17,29 +16,21 @@ class _ZonePageState extends State<ZonePage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      final zoneProvider = Provider.of<ZoneProvider>(context, listen: false);
-      final homeProvider = Provider.of<HomeProvider>(context, listen: false);
-      zoneProvider.fetchZoneData(homeProvider.selectedSubDistrict);
-    });
-  }
-
-  void _onSubDistrictChanged(String? newValue) {
-    if (newValue == null) return;
-    final homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    // Ambil instance dari ZoneProvider
     final zoneProvider = Provider.of<ZoneProvider>(context, listen: false);
-    homeProvider.setSelectedSubDistrict(newValue);
-    zoneProvider.fetchZoneData(newValue);
+    // Panggil metode untuk mengambil data kecamatan
+    zoneProvider.fetchSubDistricts();
   }
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+    // Ambil instance dari ZoneProvider
     final zoneProvider = Provider.of<ZoneProvider>(context);
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(150.0),
+        preferredSize: const Size.fromHeight(200.0),
         child: AppBar(
           backgroundColor: Colors.grey[200],
           elevation: 1.0,
@@ -81,125 +72,114 @@ class _ZonePageState extends State<ZonePage> {
                     const Spacer(),
                   ],
                 ),
-                Consumer<HomeProvider>(
-                  builder: (context, homeProvider, child) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        const Icon(Icons.location_on, color: Colors.black),
-                        const SizedBox(width: 8.0),
-                        DropdownButton<String>(
-                          value: homeProvider.selectedSubDistrict,
-                          icon: const Icon(Icons.arrow_drop_down),
-                          iconSize: 24,
-                          elevation: 16,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontFamily: 'Poppins',
-                          ),
-                          onChanged: _onSubDistrictChanged,
-                          items: homeProvider.subDistricts
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
-                      ],
-                    );
+                const SizedBox(height: 20.0),
+                // Dropdown untuk memilih Kecamatan
+                DropdownButton<String>(
+                  value: zoneProvider.selectedSubDistrict,
+                  icon: const Icon(Icons.arrow_drop_down),
+                  iconSize: 24,
+                  elevation: 16,
+                  style: const TextStyle(
+                      color: Colors.black, fontSize: 18, fontFamily: 'Poppins'),
+                  onChanged: (String? newValue) {
+                    zoneProvider.setSelectedSubDistrict(newValue!);
                   },
+                  items: zoneProvider.subDistricts
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
               ],
             ),
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16.0, 20, 16.0, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                height: height * 0.3,
-                color: Colors.grey[300],
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      color: const Color(0xFF004AAD),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 8.0),
-                      alignment: Alignment.topLeft,
-                      width: double.infinity,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('Zone Condition',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              )),
-                          SizedBox(
-                            height: 50,
-                            width: 50,
-                            child: Image.asset(
-                              'lib/image/iconmap.png',
-                              fit: BoxFit.contain,
+      body: Container(
+        height: height - kToolbarHeight - kBottomNavigationBarHeight,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 20, 16.0, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                  height: height * 0.3, // 30% dari tinggi layar
+                  color: Colors.grey[300],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        color: const Color(0xFF004AAD),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 8.0),
+                        alignment: Alignment.topLeft,
+                        width: double.infinity,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('Zone Condition',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                )),
+                            SizedBox(
+                              height: 50,
+                              width: 50,
+                              child: Image.asset(
+                                'lib/image/iconmap.png',
+                                fit: BoxFit.contain,
+                              ),
                             ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Image.asset(
+                          'lib/image/map.png',
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      isInformationButtonPressed = !isInformationButtonPressed;
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: isInformationButtonPressed
+                        ? const Color(0xFF004AAD)
+                        : Colors.grey,
+                  ),
+                  child: const Text('Information'),
+                ),
+                const SizedBox(height: 20),
+                if (isInformationButtonPressed)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: zoneProvider.villages.map((village) {
+                      return Column(
+                        children: [
+                          const SizedBox(height: 10),
+                          InformationRow(
+                            leftText: village,
+                            rightText: 'Rawan Begal',
                           ),
                         ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Image.asset(
-                        'lib/image/map.png',
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    isInformationButtonPressed = !isInformationButtonPressed;
-                  });
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: isInformationButtonPressed
-                      ? const Color(0xFF004AAD)
-                      : Colors.grey,
-                ),
-                child: const Text('Information'),
-              ),
-              const SizedBox(height: 20),
-              if (isInformationButtonPressed)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 10),
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      color: Colors.grey[200],
-                      child: Column(
-                        children: zoneProvider.zoneData.map((zone) {
-                          return InformationRow(
-                            leftText: zone['area']!,
-                            rightText: zone['condition']!,
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ],
-                ),
-            ],
+                      );
+                    }).toList(),
+                  ),
+              ],
+            ),
           ),
         ),
       ),
@@ -211,9 +191,11 @@ class _ZonePageState extends State<ZonePage> {
 class InformationRow extends StatelessWidget {
   final String leftText;
   final String rightText;
-
-  const InformationRow(
-      {super.key, required this.leftText, required this.rightText});
+  const InformationRow({
+    Key? key,
+    required this.leftText,
+    required this.rightText,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

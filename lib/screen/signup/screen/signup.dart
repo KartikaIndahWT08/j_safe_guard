@@ -14,7 +14,6 @@ class SignupPage extends StatelessWidget {
     final passwordController = TextEditingController();
     final confirmPasswordController = TextEditingController();
     final nameController = TextEditingController();
-    final phoneController = TextEditingController();
 
     return Scaffold(
       body: Padding(
@@ -44,17 +43,6 @@ class SignupPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 TextField(
-                  controller: phoneController,
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.phone),
-                    hintText: 'Phone Number',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                TextField(
                   controller: emailController,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.email),
@@ -70,10 +58,6 @@ class SignupPage extends StatelessWidget {
                   obscureText: true,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock),
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.visibility),
-                      onPressed: () {},
-                    ),
                     hintText: 'Password',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
@@ -86,10 +70,6 @@ class SignupPage extends StatelessWidget {
                   obscureText: true,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock),
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.visibility),
-                      onPressed: () {},
-                    ),
                     hintText: 'Confirm Password',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
@@ -134,7 +114,6 @@ class SignupPage extends StatelessWidget {
                     final password = passwordController.text;
                     final confirmPassword = confirmPasswordController.text;
                     final name = nameController.text;
-                    final phone = phoneController.text;
 
                     if (password != confirmPassword) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -147,7 +126,7 @@ class SignupPage extends StatelessWidget {
 
                     try {
                       await Provider.of<AuthProvider>(context, listen: false)
-                          .signUp(context, email, password, name, phone);
+                          .signUp(context, email, password, name);
                       Navigator.push(
                         context,
                         MaterialPageRoute(

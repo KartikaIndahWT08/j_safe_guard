@@ -120,7 +120,7 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 20.0),
                 Row(
                   children: [
-                    const Icon(Icons.location_on, color: Colors.white),
+                    const Icon(Icons.location_on, color: Colors.black),
                     const SizedBox(width: 8.0),
                     DropdownButton<String>(
                       value: homeProvider.selectedSubDistrict,
@@ -137,7 +137,7 @@ class HomePage extends StatelessWidget {
                             value,
                             style: const TextStyle(
                               fontSize: 18,
-                              color: Colors.white,
+                              color: Colors.black,
                               fontFamily: 'Poppins',
                             ),
                           ),

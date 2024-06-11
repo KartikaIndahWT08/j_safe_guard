@@ -52,16 +52,6 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                      foregroundColor: const Color(0xFF004AAD),
-                    ),
-                    child: const Text('Forgot Password?'),
-                  ),
-                ),
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () async {

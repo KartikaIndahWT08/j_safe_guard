@@ -8,7 +8,7 @@ class AuthRepo {
   final _firestore = FirebaseFirestore.instance;
 
   Future<User?> createUserWithUsernamePassword(
-      String email, String password, String name, String phoneNumber) async {
+      String email, String password, String name) async {
     try {
       final creds = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -17,7 +17,6 @@ class AuthRepo {
       await userRef.set({
         'email': email,
         'name': name,
-        'phoneNumber': phoneNumber,
       });
 
       return creds.user;
