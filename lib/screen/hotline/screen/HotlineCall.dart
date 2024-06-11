@@ -1,5 +1,8 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tes_j_safe_guard/loading_widget.dart';
 import 'package:tes_j_safe_guard/provider/home_provider.dart';
 import 'package:tes_j_safe_guard/provider/hotline_provider.dart';
 
@@ -9,24 +12,26 @@ class HotlinePage extends StatefulWidget {
   const HotlinePage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _HotlinePageState createState() => _HotlinePageState();
 }
 
 class _HotlinePageState extends State<HotlinePage> {
+  late Future<void> _fetchDataFuture;
+
   @override
   void initState() {
     super.initState();
-    // Fetch the initial data when the widget is created
     final homeProvider = Provider.of<HomeProvider>(context, listen: false);
     final hotlineProvider =
         Provider.of<HotlineProvider>(context, listen: false);
-    hotlineProvider.fetchHotlineData(homeProvider.selectedSubDistrict);
+    _fetchDataFuture =
+        hotlineProvider.fetchHotlineData(homeProvider.selectedSubDistrict);
   }
 
   @override
   Widget build(BuildContext context) {
     final hotlineProvider = Provider.of<HotlineProvider>(context);
+    final homeProvider = Provider.of<HomeProvider>(context);
 
     return Scaffold(
       appBar: PreferredSize(
@@ -73,7 +78,6 @@ class _HotlinePageState extends State<HotlinePage> {
                     const Spacer(),
                   ],
                 ),
-                // const SizedBox(height: 20.0),
                 Consumer<HomeProvider>(
                   builder: (context, homeProvider, child) {
                     return Row(
@@ -93,7 +97,10 @@ class _HotlinePageState extends State<HotlinePage> {
                           ),
                           onChanged: (String? newValue) {
                             homeProvider.setSelectedSubDistrict(newValue!);
-                            hotlineProvider.fetchHotlineData(newValue);
+                            setState(() {
+                              _fetchDataFuture =
+                                  hotlineProvider.fetchHotlineData(newValue);
+                            });
                           },
                           items: homeProvider.subDistricts
                               .map<DropdownMenuItem<String>>((String value) {
@@ -112,30 +119,43 @@ class _HotlinePageState extends State<HotlinePage> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            buildCard(
-                'Police',
-                'lib/image/police.png',
-                hotlineProvider.hotlineData
-                    .where((data) => data['title'] == 'Polisi')
-                    .toList()),
-            buildCard(
-                'Ambulance',
-                'lib/image/ambulan.png',
-                hotlineProvider.hotlineData
-                    .where((data) => data['title'] == 'Ambulan')
-                    .toList()),
-            buildCard(
-                'Firefighter',
-                'lib/image/fire.png',
-                hotlineProvider.hotlineData
-                    .where((data) => data['title'] == 'Pemadam Kebakaran')
-                    .toList()),
-          ],
-        ),
+      body: FutureBuilder(
+        future: _fetchDataFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const LoadingWidget();
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
+            );
+          } else {
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ListView(
+                children: [
+                  buildCard(
+                      'Police',
+                      'lib/image/police.png',
+                      hotlineProvider.hotlineData
+                          .where((data) => data['title'] == 'Polisi')
+                          .toList()),
+                  buildCard(
+                      'Ambulance',
+                      'lib/image/ambulan.png',
+                      hotlineProvider.hotlineData
+                          .where((data) => data['title'] == 'Ambulan')
+                          .toList()),
+                  buildCard(
+                      'Firefighter',
+                      'lib/image/fire.png',
+                      hotlineProvider.hotlineData
+                          .where((data) => data['title'] == 'Pemadam Kebakaran')
+                          .toList()),
+                ],
+              ),
+            );
+          }
+        },
       ),
       bottomNavigationBar: const BottomNavBar(selectedIndex: 0),
     );
