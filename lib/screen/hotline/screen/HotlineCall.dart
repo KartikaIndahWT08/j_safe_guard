@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable
+// ignore_for_file: library_private_types_in_public_api, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -134,23 +134,26 @@ class _HotlinePageState extends State<HotlinePage> {
               child: ListView(
                 children: [
                   buildCard(
-                      'Police',
-                      'lib/image/police.png',
-                      hotlineProvider.hotlineData
-                          .where((data) => data['title'] == 'Polisi')
-                          .toList()),
+                    'Police',
+                    'lib/image/police.png',
+                    hotlineProvider.hotlineData
+                        .where((data) => data['title'] == 'Polisi')
+                        .toList(),
+                  ),
                   buildCard(
-                      'Ambulance',
-                      'lib/image/ambulan.png',
-                      hotlineProvider.hotlineData
-                          .where((data) => data['title'] == 'Ambulan')
-                          .toList()),
+                    'Ambulance',
+                    'lib/image/ambulan.png',
+                    hotlineProvider.hotlineData
+                        .where((data) => data['title'] == 'Ambulan')
+                        .toList(),
+                  ),
                   buildCard(
-                      'Firefighter',
-                      'lib/image/fire.png',
-                      hotlineProvider.hotlineData
-                          .where((data) => data['title'] == 'Pemadam Kebakaran')
-                          .toList()),
+                    'Firefighter',
+                    'lib/image/fire.png',
+                    hotlineProvider.hotlineData
+                        .where((data) => data['title'] == 'Pemadam Kebakaran')
+                        .toList(),
+                  ),
                 ],
               ),
             );
@@ -222,13 +225,13 @@ class _HotlinePageState extends State<HotlinePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: Text(
+                  child: SelectableText(
                     title,
                     style: const TextStyle(fontSize: 13),
                   ),
                 ),
                 const SizedBox(width: 8),
-                Text(
+                SelectableText(
                   trailing,
                   style:
                       const TextStyle(color: Color(0xFF004AAD), fontSize: 13),

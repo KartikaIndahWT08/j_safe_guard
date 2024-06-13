@@ -84,7 +84,7 @@ class HomePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'Good Afternoon,',
+                          'Hello, Wellcome',
                           style: TextStyle(
                             fontSize: 24,
                             color: Colors.black,
