@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:tes_j_safe_guard/navbar.dart';
 import 'package:tes_j_safe_guard/provider/home_provider.dart';
 import 'package:tes_j_safe_guard/provider/user_provider.dart';
+import 'package:tes_j_safe_guard/screen/education/screen/education.dart';
 import 'package:tes_j_safe_guard/screen/news/screen/news.dart';
 import '../../hotline/screen/HotlineCall.dart';
 import '../../zoneC/screen/ZoneCondition.dart';
@@ -336,7 +337,8 @@ class HomePage extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const News()),
+                      MaterialPageRoute(
+                          builder: (context) => const Education()),
                     );
                   },
                   child: const Text(
